@@ -65,7 +65,7 @@ bot.command('predictions', handleMyPredictions);
 // 4. Voice Messages
 bot.on('message:voice', handleVoiceMessage);
 
-// 5. Text Pattern & Keyword Listeners — همه فارسی، بدون اسلش
+// 5. Text Pattern & Keyword Listeners
 function normFa(s) {
   return (s || '')
     .replace(/ي/g, 'ی').replace(/ك/g, 'ک')
@@ -77,37 +77,30 @@ bot.on('message:text', async (ctx) => {
   const text = normFa(raw);
   const hasReply = !!ctx.message.reply_to_message;
 
-  // راهنما (شروع، کمک، دستورات هم قبول است)
   if (['راهنما', 'شروع', 'کمک', 'دستورات', 'دستور'].includes(text)) {
     return handleHelpCommand(ctx);
   }
 
-  // قوانین
   if (text === 'قوانین' || text === 'قوانین گروه' || text === 'دستیار قوانین' || text === 'نمایش قوانین') {
     return handleGetRules(ctx);
   }
 
-  // تنظیم قوانین (فقط مالک و مدیر)
   if (text.startsWith('تنظیم قوانین') || text.startsWith('تنظیم قانون')) {
     return handleSetRules(ctx);
   }
 
-  // اخطار (ریپلای)
   if ((text === 'اخطار' || text === 'دستیار اخطار') && hasReply) {
     return handleWarn(ctx);
   }
 
-  // سکوت (ریپلای) — مثال: سکوت ۱۵
   if ((text === 'سکوت' || text.startsWith('سکوت ') || text === 'دستیار سکوت' || text.startsWith('دستیار سکوت ')) && hasReply) {
     return handleMute(ctx);
   }
 
-  // رفع سکوت (ریپلای)
   if ((text === 'رفع سکوت' || text === 'لغو سکوت' || text === 'دستیار رفع سکوت') && hasReply) {
     return handleUnmute(ctx);
   }
 
-  // افزودن مدیر / حذف مدیر (ریپلای — فقط مالک)
   if ((text === 'افزودن مدیر' || text === 'اضافه کردن مدیر' || text === 'دستیار افزودن مدیر') && hasReply) {
     return handleAddAdmin(ctx);
   }
@@ -115,67 +108,54 @@ bot.on('message:text', async (ctx) => {
     return handleDelAdmin(ctx);
   }
 
-  // جدول امتیاز و برترین‌ها
   if (text.includes('برترین') || text.includes('برترین ها') || text.includes('رتبه بندی') || text.includes('لیدربورد') || text.includes('جدول امتیاز')) {
     return handleLeaderboard(ctx);
   }
 
-  // آمار من
   if (text === 'آمار من' || text === 'آمار' || text === 'امتیاز من' || text === 'پروفایل من' || text === 'دستیار آمار') {
     return handleStats(ctx);
   }
 
-  // پیش‌بینی‌های من
   if (text.includes('پیش بینی های من') || text.includes('پیشبینی های من')) {
     return handleMyPredictions(ctx);
   }
 
-  // امتیاز دادن (ریپلای با: مثبت یک، +1، 👍)
   if ((text === 'مثبت یک' || text === '+' || text === '+1' || text === '👍' || text === 'دستیار مثبت یک') && hasReply) {
     return handleKarmaIncrement(ctx);
   }
 
-  // تحلیل
   if (text.startsWith('دستیار تحلیل') || (text === 'تحلیل' && hasReply) || text.startsWith('تحلیل ')) {
     return handleAnalysisCommand(ctx);
   }
 
-  // ثبت پیش‌بینی
   if (text.startsWith('دستیار پیش بینی') || text.startsWith('پیش بینی ')) {
     return handlePredictionCommand(ctx);
   }
 
-  // قرعه‌کشی
   if (text.includes('قرعه کشی')) {
     return handleLottery(ctx);
   }
 
-  // چیستان
   if (text.includes('چیستان')) {
     return handleRiddle(ctx);
   }
 
-  // جوک
   if (text.includes('جوک') || text.includes('لطیفه')) {
     return handleJoke(ctx);
   }
 
-  // نظرسنجی
   if (text.startsWith('دستیار نظرسنجی') || text.startsWith('نظرسنجی ')) {
     return handlePollGenerator(ctx);
   }
 
-  // گزارش
   if (text.includes('گزارش')) {
     return handleInstantReport(ctx);
   }
 
-  // ترجمه و ویراستاری با متن ساده هم کار کنند
   if (text.startsWith('ترجمه') || text.startsWith('ویراستاری') || text.startsWith('خلاصه')) {
     return handleAIChat(ctx);
   }
 
-  // گفتگوی آزاد با کلمه دستیار یا ریپلای روی پیام ربات
   const isReplyToBot = ctx.message.reply_to_message && ctx.message.reply_to_message.from && ctx.message.reply_to_message.from.id === ctx.me.id;
   const isKeywordCall = text.includes('دستیار');
 
@@ -187,12 +167,12 @@ bot.on('message:text', async (ctx) => {
 // Initialize Cron
 initDailyReportCron(bot);
 
-// Error Handling
+// Error Handling (never let one bad update crash the whole process)
 bot.catch((err) => {
-  console.error('Bot Runtime Error:', err);
-  process.on('unhandledRejection', (e) => console.error('UnhandledRejection:', e?.message || e));
-process.on('uncaughtException', (e) => console.error('UncaughtException:', e?.message || e));
+  console.error('Bot Runtime Error:', err?.message || err);
 });
+process.on('unhandledRejection', (e) => console.error('UnhandledRejection:', e?.message || e));
+process.on('uncaughtException', (e) => console.error('UncaughtException:', e?.message || e));
 
 // Health server (required for Render/Railway free hosting) + webhook support
 const express = require('express');
