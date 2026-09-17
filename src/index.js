@@ -190,6 +190,8 @@ initDailyReportCron(bot);
 // Error Handling
 bot.catch((err) => {
   console.error('Bot Runtime Error:', err);
+  process.on('unhandledRejection', (e) => console.error('UnhandledRejection:', e?.message || e));
+process.on('uncaughtException', (e) => console.error('UncaughtException:', e?.message || e));
 });
 
 // Health server (required for Render/Railway free hosting) + webhook support
