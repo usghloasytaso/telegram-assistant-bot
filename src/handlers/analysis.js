@@ -22,10 +22,14 @@ async function handleAnalysisCommand(ctx) {
   const senderName = ctx.message.reply_to_message ? ctx.message.reply_to_message.from.first_name : ctx.from.first_name;
   const analysisResult = await analyzeNewsPost(targetPost, `ارسال شده توسط ${senderName}`);
 
-  await ctx.reply(analysisResult, {
-    reply_to_message_id: ctx.message.message_id,
-    parse_mode: 'Markdown'
-  });
+    try {
+    await ctx.reply(analysisResult, {
+      reply_to_message_id: ctx.message.message_id,
+      parse_mode: 'Markdown'
+    });
+  } catch (e) {
+    await ctx.reply(analysisResult);
+  }
 }
 
 /**
