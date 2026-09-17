@@ -86,7 +86,7 @@ async function handleAIChat(ctx) {
 
   const aiResponse = await generateAIResponse(userQuery, systemPrompt, formattedHistory, 800);
 
-    // Reply to user (fallback to plain send if original message was deleted)
+  // Reply to user (fallback to plain send if original message was deleted)
   try {
     await ctx.reply(aiResponse, {
       reply_to_message_id: ctx.message.message_id,
@@ -99,5 +99,6 @@ async function handleAIChat(ctx) {
       console.error('Reply failed:', e2.message);
     }
   }
+}
 
 module.exports = { handleAIChat };
