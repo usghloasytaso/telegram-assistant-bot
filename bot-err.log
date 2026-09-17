@@ -1,0 +1,67 @@
+Bot Runtime Error: GrammyError: Call to 'sendMessage' failed! (403: Forbidden: bot was kicked from the supergroup chat)
+    at toGrammyError (E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\core\error.js:47:12)
+    at ApiClient.callApi (E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\core\client.js:101:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async handleNewChatMembers (E:\New folder (4)\telegram-assistant-bot\src\handlers\groupEvents.js:20:5)
+    at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:578:13
+    at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:62:13
+    at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9
+    at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9
+    at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9
+    at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9 {
+  error: GrammyError: Call to 'sendMessage' failed! (403: Forbidden: bot was kicked from the supergroup chat)
+      at toGrammyError (E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\core\error.js:47:12)
+      at ApiClient.callApi (E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\core\client.js:101:48)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async handleNewChatMembers (E:\New folder (4)\telegram-assistant-bot\src\handlers\groupEvents.js:20:5)
+      at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:578:13
+      at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:62:13
+      at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9
+      at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9
+      at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9
+      at async E:\New folder (4)\telegram-assistant-bot\node_modules\grammy\out\composer.js:57:9 {
+    method: 'sendMessage',
+    payload: {
+      chat_id: -1003431231114,
+      text: 'سلام اعضای گرامی گروه! 👋\n' +
+        'من **دستیار هوشمند گروه** هستم 🤖\n' +
+        '\n' +
+        'لطفاً من را به عنوان **ادمین گروه (Administrator)** قرار دهید تا بتوانم تمام قابلیت‌های تحلیلی، مدیریتی، حافظه اختصاصی اعضا و فیلترها را فعال کنم! 🚀\n' +
+        '\n' +
+        '📌 پس از ادمین کردن، کلمه **`راهنما`** را ارسال کنید.',
+      business_connection_id: undefined,
+      direct_messages_topic_id: undefined,
+      parse_mode: 'Markdown'
+    },
+    ok: false,
+    error_code: 403,
+    description: 'Forbidden: bot was kicked from the supergroup chat',
+    parameters: {}
+  },
+  ctx: Context {
+    update: { update_id: 185591427, message: [Object] },
+    api: Api {
+      token: '8612269605:AAEzKAbz9zJI0UGuOWRqQ5FLMnd03DgfA8g',
+      options: undefined,
+      raw: {},
+      config: [Object]
+    },
+    me: {
+      id: 8612269605,
+      is_bot: true,
+      first_name: 'دستیار گروه بان',
+      username: 'groohbandastyarbot',
+      can_join_groups: true,
+      can_read_all_group_messages: false,
+      supports_inline_queries: false,
+      supports_guest_queries: false,
+      can_connect_to_business: false,
+      has_main_web_app: false,
+      has_topics_enabled: false,
+      allows_users_to_create_topics: false,
+      can_manage_bots: false,
+      supports_join_request_queries: false
+    }
+  },
+  name: 'BotError'
+}
